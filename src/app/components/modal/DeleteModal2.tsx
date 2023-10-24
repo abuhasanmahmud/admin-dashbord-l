@@ -19,7 +19,7 @@ const DeleteModal2 = ({ productId, categoryId, staffId, couponId }: any) => {
     //delete categroy
     if (categoryId !== undefined) {
       const res = await deleteCategory(categoryId);
-      // console.log("res in delete modal", res);
+      console.log("res in delete modal", res);
       if (res?.status === 200) {
         toast.success(`${res?.message}`);
         setIsDeleteModal(false);
