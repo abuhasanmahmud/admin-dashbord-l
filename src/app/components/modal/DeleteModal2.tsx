@@ -6,68 +6,65 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { useMyContext } from "../context/myContext";
-import { deleteCategory } from "@/lib/actions/category.action";
-import { deleteProduct } from "@/lib/actions/product.action";
-import { usePathname } from "next/navigation";
-import { deleteStaff } from "@/lib/actions/staff.action";
-import { deleteCoupon } from "@/lib/actions/coupon.action";
+import { deleteCategory } from "@/app/controllers/category.controller";
+import { deleteProduct } from "@/app/controllers/product.controller";
+import { useRouter } from "next/navigation";
 
 const DeleteModal2 = ({ productId, categoryId, staffId, couponId }: any) => {
+  const router = useRouter();
   const { isDeleteModal, setIsDeleteModal } = useMyContext();
   const cancelButtonRef = useRef(null);
-  const path = usePathname();
-  // console.log("p=", productId, "c=", categoryId);
-
-  const deleteCategoryHandel = async () => {};
 
   const handelDelete = async () => {
     //delete categroy
     if (categoryId !== undefined) {
-      const res = await deleteCategory({ id: categoryId, path });
-      // console.log("res in delete modal", res);
-      if (res?._id) {
-        toast.success(`${res.title} delete successfully`);
+      const res = await deleteCategory(categoryId);
+      console.log("res in delete modal", res);
+      if (res?.status === 200) {
+        toast.success(`${res?.message}`);
         setIsDeleteModal(false);
+        router.refresh()
       } else {
-        toast.error("errors");
+        toast.error(`${res?.error}` || "something error is happend");
       }
     }
 
     //delete product
     else if (productId !== undefined) {
-      const res = await deleteProduct({ id: productId, path });
-      console.log("res in delete modal", res);
-      if (res?._id) {
-        toast.success(`${res.name} delete successfully`);
+      const res = await deleteProduct(productId);
+      // console.log("res in delete modal", res);
+      if (res?.status === 200) {
+        toast.success(`${res?.message}`);
         setIsDeleteModal(false);
+        router.refresh();
       } else {
         toast.error("errors");
       }
     }
 
     //delete staff
-    else if (staffId !== undefined) {
-      const res = await deleteStaff({ id: staffId, path });
-      console.log("res in delete modal", res);
-      if (res?._id) {
-        toast.success(`${res.name} delete successfully`);
-        setIsDeleteModal(false);
-      } else {
-        toast.error("errors");
-      }
-    }
+    // else if (staffId !== undefined) {
+    //   const res = await deleteStaff({ id: staffId, path });
+    //   console.log("res in delete modal", res);
+    //   if (res?._id) {
+    //     toast.success(`${res.name} delete successfully`);
+    //     setIsDeleteModal(false);
+    //   } else {
+    //     toast.error("errors");
+    //   }
+    // }
 
     //delete coupon
-    else if (couponId !== undefined) {
-      const res = await deleteCoupon({ id: couponId, path });
-      console.log("res in delete modal", res);
-      if (res?._id) {
-        toast.success(`${res.title} delete successfully`);
-        setIsDeleteModal(false);
-      } else {
-        toast.error("errors");
-      }
-    }
+    // else if (couponId !== undefined) {
+    //   const res = await deleteCoupon({ id: couponId, path });
+    //   console.log("res in delete modal", res);
+    //   if (res?._id) {
+    //     toast.success(`${res.title} delete successfully`);
+    //     setIsDeleteModal(false);
+    //   } else {
+    //     toast.error("errors");
+    //   }
+    // }
   };
 
   return (

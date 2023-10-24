@@ -1,9 +1,9 @@
 import React from "react";
 import CategoryTable from "./CategoryTable";
-import { fetchAllCategory } from "@/lib/actions/category.action";
+import { getAllCategory } from "@/app/controllers/category.controller";
 
 const Category = async () => {
-  const allCategory = await fetchAllCategory();
+  const allCategory = await getAllCategory();
   // console.log("all Category", allCategory);
   return (
     <div>

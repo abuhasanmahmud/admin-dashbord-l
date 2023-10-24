@@ -44,3 +44,16 @@ export async function updateProduct({ id, updateProductData }) {
     console.log("error in update product", error);
   }
 }
+
+// Delete product
+export async function deleteProduct(id) {
+  // console.log("id,updateProductData", id, updateProductData);
+  try {
+    const response = await fetch(`http://localhost:3000/api/v1/products/${id}`, {
+      method: "DELETE",
+    });
+    return response.json();
+  } catch (error) {
+    console.log("error in update product", error);
+  }
+}

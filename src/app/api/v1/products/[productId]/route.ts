@@ -16,7 +16,7 @@ export const DELETE = async (req: NextRequest, { params }: Params) => {
     if (!deletedProduct) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
-    return NextResponse.json({ message: "Product deleted successfully" }, { status: 200 });
+    return NextResponse.json({ message: "Product deleted successfully", status: 200 });
   } catch (error: any) {
     return new Response(JSON.stringify(`Deleting Error: ${error.message}`));
   }

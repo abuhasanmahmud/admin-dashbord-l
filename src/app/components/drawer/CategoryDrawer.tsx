@@ -9,8 +9,9 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Bars } from "react-loader-spinner";
-import { addCategory, updateCategory } from "@/lib/actions/category.action";
-import { usePathname } from "next/navigation";
+
+import {  useRouter } from "next/navigation";
+import { addCategory, updateCategory } from "@/app/controllers/category.controller";
 
 const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categoryDetails }: any) => {
   const {
@@ -29,7 +30,7 @@ const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categor
   }, [categoryDetails]);
 
   const [submitting, setSubmitting] = useState(false);
-  const path = usePathname();
+  const router = useRouter();
 
   const handelCategoryAdd = async (data: any) => {
     setSubmitting(true);
@@ -39,15 +40,16 @@ const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categor
       des: data.des,
     };
 
-    const res = await addCategory({ categoryData, path });
-    if (res._id) {
+    const res = await addCategory(categoryData);
+    if (res?.status === 200) {
       setSubmitting(false);
       reset();
       setIsOpenCategoryDrawer(false);
-      toast.success(`${res.title} successfully added`);
+      toast.success(`${res?.message}`);
+      router.refresh();
     } else {
       setSubmitting(false);
-      alert("there is an error");
+      toast.error(res?.error?.message || "something error");
     }
   };
 
@@ -58,14 +60,17 @@ const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categor
       des: data.des,
       type: data.type,
     };
-    const res = await updateCategory({ category: categoryData, path, id: categoryDetails?._id });
-    // console.log("click", res);
-    if (res._id) {
+
+    const res = await updateCategory({  id: categoryDetails?._id,updateCategoryData:categoryData });
+    console.log("res..in c up", res);
+    if (res?.status === 200) {
       setSubmitting(false);
       setIsOpenCategoryDrawer(false);
-      toast.success(`${res?.title} update successfully`);
+      toast.success(`${res?.message}` || "update successfully");
+      router.refresh();
     } else {
       setSubmitting(false);
+      toast.error(`${res?.error?.message}` || "somethings error");
     }
   };
 

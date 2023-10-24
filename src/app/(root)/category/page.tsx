@@ -1,12 +1,13 @@
+import Category from "@/app/components/Category/Category";
 import Sidebar from "@/app/components/shared/Sidebar";
 import React from "react";
 
-const Category = () => {
+const Page = () => {
   return (
     <div>
-      <Sidebar component={""} />
+      <Sidebar component={<Category />} />
     </div>
   );
 };
 
-export default Category;
+export default Page;
