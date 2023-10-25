@@ -50,7 +50,6 @@ const CouponTable = ({
                         Discount
                       </th>
 
-                      
                       <th scope="col" className=" py-3.5 text-center text-sm font-normal text-gray-700">
                         Start Date
                       </th>
@@ -74,14 +73,12 @@ const CouponTable = ({
                       <tr key={item.name}>
                         <td className="whitespace-nowrap text-center mx-2  py-4">{item?.title}</td>
                         <td className="whitespace-nowrap text-center py-4">
-                          <div className="text-sm text-center text-gray-900 ">
-                            {item?.couponCode} code
-                          </div>
+                          <div className="text-sm text-center text-gray-900 ">{item?.couponCode}</div>
                         </td>
                         <td className="whitespace-nowrap text-center py-4">
                           <div className="text-sm text-gray-900 ">{item?.discountPercentage}%</div>
                         </td>
-                        
+
                         <td className="whitespace-nowrap  py-4">
                           <div className="text-sm text-gray-900 text-center ">start date</div>
                         </td>
