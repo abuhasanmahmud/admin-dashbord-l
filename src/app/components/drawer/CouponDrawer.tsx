@@ -10,11 +10,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Bars } from "react-loader-spinner";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { addCoupon, updateCoupon } from "@/app/controllers/coupon.controller";
 
 const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails }: any) => {
   // console.log("couponDetails", couponDetails);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -51,6 +52,7 @@ const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails
       reset();
       setIsOpenCouponDrawer(false);
       toast.success(`${res?.message}` || "coupon successfully created");
+      router.refresh();
     } else {
       setSubmitting(false);
       toast.error(`${res?.error?.message}` || "something is worng in coupon");
@@ -65,12 +67,13 @@ const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails
       endTime: data.endTime,
       discountPercentage: data.discountPercentage,
     };
-    const res = await updateCoupon({ coupon: couponData, path, id: couponDetails?._id });
+    const res = await updateCoupon({ updateCouponData: couponData, id: couponDetails?._id });
     // console.log("click", res);
-    if (res._id) {
+    if (res?.status === 200) {
       setSubmitting(false);
       setIsOpenCouponDrawer(false);
-      toast.success(`${res?.title} update successfully`);
+      toast.success(`${res?.message} ` || "coupon update successfully");
+      router.refresh()
     } else {
       setSubmitting(false);
     }

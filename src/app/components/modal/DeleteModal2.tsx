@@ -9,6 +9,8 @@ import { useMyContext } from "../context/myContext";
 import { deleteCategory } from "@/app/controllers/category.controller";
 import { deleteProduct } from "@/app/controllers/product.controller";
 import { useRouter } from "next/navigation";
+import { deleteCoupon } from "@/app/controllers/coupon.controller";
+import { deleteStaff } from "@/app/controllers/staff.controller";
 
 const DeleteModal2 = ({ productId, categoryId, staffId, couponId }: any) => {
   const router = useRouter();
@@ -23,7 +25,7 @@ const DeleteModal2 = ({ productId, categoryId, staffId, couponId }: any) => {
       if (res?.status === 200) {
         toast.success(`${res?.message}`);
         setIsDeleteModal(false);
-        router.refresh()
+        router.refresh();
       } else {
         toast.error(`${res?.error}` || "something error is happend");
       }
@@ -43,28 +45,30 @@ const DeleteModal2 = ({ productId, categoryId, staffId, couponId }: any) => {
     }
 
     //delete staff
-    // else if (staffId !== undefined) {
-    //   const res = await deleteStaff({ id: staffId, path });
-    //   console.log("res in delete modal", res);
-    //   if (res?._id) {
-    //     toast.success(`${res.name} delete successfully`);
-    //     setIsDeleteModal(false);
-    //   } else {
-    //     toast.error("errors");
-    //   }
-    // }
+    else if (staffId !== undefined) {
+      const res = await deleteStaff(staffId);
+      console.log("res in delete modal", res);
+      if (res?.status === 200) {
+        toast.success(`${res?.message}`);
+        setIsDeleteModal(false);
+        router.refresh();
+      } else {
+        toast.error(`${res?.error?.message}` || "something is error here");
+      }
+    }
 
-    //delete coupon
-    // else if (couponId !== undefined) {
-    //   const res = await deleteCoupon({ id: couponId, path });
-    //   console.log("res in delete modal", res);
-    //   if (res?._id) {
-    //     toast.success(`${res.title} delete successfully`);
-    //     setIsDeleteModal(false);
-    //   } else {
-    //     toast.error("errors");
-    //   }
-    // }
+    //Delete coupon
+    else if (couponId !== undefined) {
+      const res = await deleteCoupon(couponId);
+      console.log("res in delete modal", res);
+      if (res?.status === 200) {
+        toast.success(`${res?.message}` || "Delete");
+        setIsDeleteModal(false);
+        router.refresh();
+      } else {
+        toast.error(`${res?.error?.message}` || "Something worng here");
+      }
+    }
   };
 
   return (

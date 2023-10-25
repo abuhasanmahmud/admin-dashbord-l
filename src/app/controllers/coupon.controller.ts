@@ -29,10 +29,10 @@ export async function getAllCoupons() {
 }
 
 //update coupon
-export async function updateCoupon({ id, updateCouponData }) {
+export async function updateCoupon({ updateCouponData, id }) {
   try {
     const response = await fetch(`http://localhost:3000/api/v1/coupons/${id}`, {
-      method: "DELETE",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -48,7 +48,7 @@ export async function updateCoupon({ id, updateCouponData }) {
 export async function deleteCoupon(id) {
   try {
     const response = await fetch(`http://localhost:3000/api/v1/coupons/${id}`, {
-      method: "PATCH",
+      method: "DELETE",
     });
     return response.json();
   } catch (error) {

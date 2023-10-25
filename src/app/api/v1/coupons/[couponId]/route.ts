@@ -36,10 +36,10 @@ export const PATCH = async (req: NextRequest, { params }: Params) => {
     if (!existingCoupon) {
       return new Response("blog not found", { status: 404 });
     }
-    existingCoupon.name = updateCouponData.name;
-    existingCoupon.Coupon = updateCouponData.Coupon;
-    existingCoupon.des = updateCouponData.des;
-    existingCoupon.price = updateCouponData.price;
+    existingCoupon.title = updateCouponData.title;
+    existingCoupon.couponCode = updateCouponData.couponCode;
+    existingCoupon.discountPercentage = updateCouponData.discountPercentage;
+
     await existingCoupon.save();
     return NextResponse.json({ message: "Coupon Update successfully", status: 200 });
   } catch (error: any) {
