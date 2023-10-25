@@ -29,10 +29,10 @@ export async function getAllStaffs() {
 }
 
 //update staff
-export async function updateCategory({ id, updateStaffData }) {
+export async function updateStaff({updateStaffData,id }) {
   try {
     const response = await fetch(`http://localhost:3000/api/v1/staffs/${id}`, {
-      method: "DELETE",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -48,7 +48,7 @@ export async function updateCategory({ id, updateStaffData }) {
 export async function deleteStaff(id) {
   try {
     const response = await fetch(`http://localhost:3000/api/v1/staffs/${id}`, {
-      method: "PATCH",
+      method: "DELETE",
     });
     return response.json();
   } catch (error) {

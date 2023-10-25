@@ -9,8 +9,9 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Bars } from "react-loader-spinner";
-import { addStaff, updateStaff } from "@/lib/actions/staff.action";
-import { usePathname } from "next/navigation";
+
+import { usePathname, useRouter } from "next/navigation";
+import { addStaff, updateStaff } from "@/app/controllers/staff.controller";
 
 const StaffDrawer = ({ isOpenStaffDrawer, setIsOpenStaffDrawer, staffDetails }: any) => {
   const {
@@ -30,7 +31,7 @@ const StaffDrawer = ({ isOpenStaffDrawer, setIsOpenStaffDrawer, staffDetails }: 
   }, [staffDetails]);
 
   const [submitting, setSubmitting] = useState(false);
-  const path = usePathname();
+  const router = useRouter();
 
   const handelStaffAdd = async (data: any) => {
     setSubmitting(true);
@@ -43,15 +44,16 @@ const StaffDrawer = ({ isOpenStaffDrawer, setIsOpenStaffDrawer, staffDetails }: 
       password: data.password,
     };
 
-    const res = await addStaff({ staffData, path });
-    if (res._id) {
+    const res = await addStaff(staffData);
+    if (res?.status === 200) {
       setSubmitting(false);
       reset();
       setIsOpenStaffDrawer(false);
-      toast.success(`${res.title} successfully added`);
+      toast.success(`${res.message}`);
+      router.refresh();
     } else {
       setSubmitting(false);
-      alert("there is an error");
+      toast.error(`${res?.error?.message}` || "Something error here");
     }
   };
 
@@ -65,14 +67,16 @@ const StaffDrawer = ({ isOpenStaffDrawer, setIsOpenStaffDrawer, staffDetails }: 
       role: data.role,
       password: data.password,
     };
-    const res = await updateStaff({ staff: staffData, path, id: staffDetails?._id });
+    const res = await updateStaff({ updateStaffData: staffData, id: staffDetails?._id });
     // console.log("click", res);
-    if (res._id) {
+    if (res?.status === 200) {
       setSubmitting(false);
       setIsOpenStaffDrawer(false);
-      toast.success(`${res?.title} update successfully`);
+      toast.success(`${res?.message}`);
+      router.refresh();
     } else {
       setSubmitting(false);
+      toast.error(`${res?.error?.message}` || "Something error here");
     }
   };
 
@@ -166,7 +170,7 @@ const StaffDrawer = ({ isOpenStaffDrawer, setIsOpenStaffDrawer, staffDetails }: 
                           <></>
                         ) : (
                           <>
-                            (
+                            
                             <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
                               <div>
                                 <label className="block text-sm font-medium leading-6 text-gray-900 sm:mt-1.5">
@@ -188,7 +192,7 @@ const StaffDrawer = ({ isOpenStaffDrawer, setIsOpenStaffDrawer, staffDetails }: 
                                 )}
                               </div>
                             </div>
-                            )
+                            
                           </>
                         )}
                         <div className="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">

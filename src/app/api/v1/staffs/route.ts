@@ -24,12 +24,12 @@ export const POST = async (req: NextRequest) => {
     const newOrder = new Staff({
       // set every value individually
       name: data.name,
-      price: data.price,
-      des: data.des,
-      Staff: data.Staff,
+      email: data.email,
+      role: data.role,
+      contact: data.contact,
     });
     const staff = await newOrder.save();
-    return NextResponse.json({ message: "success", staff });
+    return NextResponse.json({ message: "success create staff", status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "error", error });
   }

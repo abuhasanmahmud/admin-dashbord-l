@@ -37,9 +37,9 @@ export const PATCH = async (req: NextRequest, { params }: Params) => {
       return new Response("blog not found", { status: 404 });
     }
     existingStaff.name = updateStaffData.name;
-    existingStaff.staff = updateStaffData.staff;
-    existingStaff.des = updateStaffData.des;
-    existingStaff.price = updateStaffData.price;
+    existingStaff.email = updateStaffData.email;
+    existingStaff.role = updateStaffData.role;
+    existingStaff.contact = updateStaffData.contact;
     await existingStaff.save();
     return NextResponse.json({ message: "staff Update successfully", status: 200 });
   } catch (error: any) {
