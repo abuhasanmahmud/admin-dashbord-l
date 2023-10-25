@@ -1,9 +1,10 @@
-const BASE_URL = "http://localhost:3000";
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://admin-dashbord-l.vercel.app";
 
 // add product
 export async function addProduct(newProduct) {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/products", {
+    const response = await fetch(`${BASE_URL}/api/v1/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +35,7 @@ export async function getAllProducts() {
 export async function updateProduct({ id, updateProductData }) {
   // console.log("id,updateProductData", id, updateProductData);
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/products/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/products/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +52,7 @@ export async function updateProduct({ id, updateProductData }) {
 export async function deleteProduct(id) {
   // console.log("id,updateProductData", id, updateProductData);
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/products/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/products/${id}`, {
       method: "DELETE",
     });
     return response.json();

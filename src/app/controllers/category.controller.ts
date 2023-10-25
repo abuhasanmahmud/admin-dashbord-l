@@ -1,7 +1,10 @@
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://admin-dashbord-l.vercel.app";
+
 // add category
 export async function addCategory(newCategory) {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/categorys", {
+    const response = await fetch(`${BASE_URL}/api/v1/categorys`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +21,7 @@ export async function addCategory(newCategory) {
 //get all category
 export async function getAllCategory() {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/categorys", {
+    const response = await fetch(`${BASE_URL}/api/v1/categorys`, {
       cache: "no-store",
     });
     const category = await response.json();
@@ -32,7 +35,7 @@ export async function getAllCategory() {
 export async function updateCategory({ id, updateCategoryData }) {
   // console.log("id,updateProductData", id, updateProductData);
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/categorys/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/categorys/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +52,7 @@ export async function updateCategory({ id, updateCategoryData }) {
 export async function deleteCategory(id) {
   // console.log("id,updateProductData", id, updateProductData);
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/categorys/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/categorys/${id}`, {
       method: "DELETE",
     });
     return response.json();

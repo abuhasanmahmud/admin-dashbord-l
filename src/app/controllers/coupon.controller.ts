@@ -1,7 +1,10 @@
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://admin-dashbord-l.vercel.app";
+
 // add coupon
 export async function addCoupon(newCoupon) {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/coupons", {
+    const response = await fetch(`${BASE_URL}/api/v1/coupons`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +21,7 @@ export async function addCoupon(newCoupon) {
 //get all coupon
 export async function getAllCoupons() {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/coupons", {
+    const response = await fetch(`${BASE_URL}/api/v1/coupons`, {
       cache: "no-store",
     });
     const coupon = await response.json();
@@ -31,7 +34,7 @@ export async function getAllCoupons() {
 //update coupon
 export async function updateCoupon({ updateCouponData, id }) {
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/coupons/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/coupons/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +50,7 @@ export async function updateCoupon({ updateCouponData, id }) {
 // Delete Coupon
 export async function deleteCoupon(id) {
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/coupons/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/coupons/${id}`, {
       method: "DELETE",
     });
     return response.json();

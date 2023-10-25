@@ -1,7 +1,10 @@
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://admin-dashbord-l.vercel.app";
+
 // add staff
 export async function addStaff(newStaff) {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/staffs", {
+    const response = await fetch(`${BASE_URL}/api/v1/staffs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +21,7 @@ export async function addStaff(newStaff) {
 //get all staff
 export async function getAllStaffs() {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/staffs", {
+    const response = await fetch(`${BASE_URL}/api/v1/staffs`, {
       cache: "no-store",
     });
     const staff = await response.json();
@@ -29,9 +32,9 @@ export async function getAllStaffs() {
 }
 
 //update staff
-export async function updateStaff({updateStaffData,id }) {
+export async function updateStaff({ updateStaffData, id }) {
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/staffs/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/staffs/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +50,7 @@ export async function updateStaff({updateStaffData,id }) {
 // Delete Staff
 export async function deleteStaff(id) {
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/staffs/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/staffs/${id}`, {
       method: "DELETE",
     });
     return response.json();

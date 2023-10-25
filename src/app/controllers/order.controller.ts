@@ -1,7 +1,10 @@
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://admin-dashbord-l.vercel.app";
+
 // add order
 export async function addOrder(newOrder) {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/orders", {
+    const response = await fetch(`${BASE_URL}/api/v1/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +21,7 @@ export async function addOrder(newOrder) {
 //get all order
 export async function getAllOrders() {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/orders", {
+    const response = await fetch(`${BASE_URL}/api/v1/orders`, {
       cache: "no-store",
     });
     const order = await response.json();
@@ -31,7 +34,7 @@ export async function getAllOrders() {
 //update order
 export async function updateCategory({ id, updateOrderData }) {
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/orders/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/orders/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +50,7 @@ export async function updateCategory({ id, updateOrderData }) {
 // Delete Order
 export async function deleteOrder(id) {
   try {
-    const response = await fetch(`http://localhost:3000/api/v1/orders/${id}`, {
+    const response = await fetch(`${BASE_URL}/api/v1/orders/${id}`, {
       method: "PATCH",
     });
     return response.json();
