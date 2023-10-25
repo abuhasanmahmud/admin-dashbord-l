@@ -1,41 +1,17 @@
 "use client";
-
-import { RiDeleteBin5Fill } from "react-icons/ri";
-
-import { useEffect, useState } from "react";
-import ProductDrawer from "../drawer/productDrawer";
 import { usePathname } from "next/navigation";
-import { toast } from "react-toastify";
-import { useMyContext } from "../context/myContext";
-import DeleteModal2 from "../modal/DeleteModal2";
-
-const ProductTable = ({ products }: any) => {
-  const [productDrawer, setProductDrawer] = useState(false);
-  const [productDetails, setProductDetails] = useState({});
-  const [productId, setProductId] = useState("");
-
-  // console.log("product", products);
-  const { isDeleteModal, setIsDeleteModal } = useMyContext();
-
-  // console.log("delete modal", isDeleteModal);
-
-  const handelProductUpdata = (item: any) => {
-    setProductDetails(item);
-    setProductDrawer(true);
-  };
-
+import { RiDeleteBin5Fill } from "react-icons/ri";
+const ProductTable = ({
+  products,
+  handelProductUpdata,
+  setIsDeleteModal,
+  setProductId,
+  setProductDrawer,
+  setProductDetails,
+}: any) => {
   const path = usePathname();
-  // console.log("path", path);
-
   return (
     <>
-      <ProductDrawer
-        productDrawer={productDrawer}
-        setProductDrawer={setProductDrawer}
-        productDetails={productDetails}
-      />
-      <DeleteModal2 productId={productId} />
-
       <section className="mx-auto w-full max-w-7xl px-4 py-4">
         <div className="flex flex-col space-y-4  md:flex-row md:items-center md:justify-between md:space-y-0">
           <div>
@@ -44,7 +20,8 @@ const ProductTable = ({ products }: any) => {
               This is a list of all Products. You can add new products, edit or delete existing ones.
             </p>
           </div>
-          {path === "/products" ? (
+
+          {path === "/products" && (
             <>
               <div>
                 <button
@@ -58,8 +35,6 @@ const ProductTable = ({ products }: any) => {
                 </button>
               </div>
             </>
-          ) : (
-            ""
           )}
         </div>
         <div className="mt-6 flex flex-col">
@@ -86,9 +61,27 @@ const ProductTable = ({ products }: any) => {
                         Status
                       </th>
 
-                      <th scope="col" className=" py-3.5 text-center text-sm font-normal text-gray-700">
-                        Action
-                      </th>
+                      {path === "/products" ? (
+                        <>
+                          {" "}
+                          <th
+                            scope="col"
+                            className=" py-3.5 text-center text-sm font-normal text-gray-700"
+                          >
+                            Action
+                          </th>{" "}
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <th
+                            scope="col"
+                            className=" py-3.5 text-center text-sm font-normal text-gray-700"
+                          >
+                            Quantity
+                          </th>
+                        </>
+                      )}
                       <th scope="col" className="relative px-4 py-3.5">
                         <span className="sr-only">Edit</span>
                       </th>
@@ -123,7 +116,7 @@ const ProductTable = ({ products }: any) => {
 
                         {path === "/products" ? (
                           <>
-                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right flex justify-center  items-center gap-2 text-sm font-medium sm:pr-0">
+                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right flex justify-center  items-center gap-2 text-sm font-medium sm:pr-0 mt-5">
                               <a
                                 onClick={() => handelProductUpdata(item)}
                                 className="text-indigo-600 hover:text-indigo-900 cursor-pointer "
@@ -143,7 +136,7 @@ const ProductTable = ({ products }: any) => {
                           </>
                         ) : (
                           <>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ">
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center ">
                               {item.quantity} 00
                             </td>
                           </>

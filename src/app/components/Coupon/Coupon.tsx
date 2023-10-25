@@ -1,12 +1,10 @@
 import React from "react";
 import CouponTable from "./CouponTable";
-import { fetchAllCoupon } from "@/lib/actions/coupon.action";
 
-const Coupon = async () => {
-  const allCoupon = await fetchAllCoupon();
+const Coupon = async ({ coupons }) => {
   return (
     <>
-      <CouponTable coupons={allCoupon} />
+      <CouponTable coupons={coupons} />
     </>
   );
 };

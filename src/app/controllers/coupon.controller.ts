@@ -29,7 +29,7 @@ export async function getAllCoupons() {
 }
 
 //update coupon
-export async function updateCategory({ id, updateCouponData }) {
+export async function updateCoupon({ id, updateCouponData }) {
   try {
     const response = await fetch(`http://localhost:3000/api/v1/coupons/${id}`, {
       method: "DELETE",

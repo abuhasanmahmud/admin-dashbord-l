@@ -1,3 +1,5 @@
+const BASE_URL = "http://localhost:3000";
+
 // add product
 export async function addProduct(newProduct) {
   try {
@@ -18,7 +20,7 @@ export async function addProduct(newProduct) {
 //get all products
 export async function getAllProducts() {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/products", {
+    const response = await fetch(`${BASE_URL}/api/v1/products`, {
       cache: "no-store",
     });
     const products = await response.json();

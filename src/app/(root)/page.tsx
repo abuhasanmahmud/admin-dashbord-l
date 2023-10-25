@@ -1,10 +1,11 @@
 import DashboardHome from "../components/dashboard/DashboardHome";
 import Sidebar from "../components/shared/Sidebar";
-export default function Home() {
-  console.log("home page");
+import { getAllProducts } from "@/app/controllers/product.controller";
+export default async function Home() {
+  const allProducts = await getAllProducts();
   return (
     <>
-      <Sidebar component={<DashboardHome />} />
+      <Sidebar component={<DashboardHome allProducts={allProducts} />} />
     </>
   );
 }

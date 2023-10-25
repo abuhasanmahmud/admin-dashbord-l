@@ -9,8 +9,9 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Bars } from "react-loader-spinner";
-import { addCoupon, updateCoupon } from "@/lib/actions/coupon.action";
+
 import { usePathname } from "next/navigation";
+import { addCoupon, updateCoupon } from "@/app/controllers/coupon.controller";
 
 const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails }: any) => {
   // console.log("couponDetails", couponDetails);
@@ -43,15 +44,16 @@ const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails
       discountPercentage: data.discountPercentage,
     };
 
-    const res = await addCoupon({ couponData, path });
-    if (res._id) {
+    const res = await addCoupon(couponData);
+    console.log("res...in coupon", res);
+    if (res?.status === 200) {
       setSubmitting(false);
       reset();
       setIsOpenCouponDrawer(false);
-      toast.success(`${res.title} successfully added`);
+      toast.success(`${res?.message}` || "coupon successfully created");
     } else {
       setSubmitting(false);
-      alert("there is an error");
+      toast.error(`${res?.error?.message}` || "something is worng in coupon");
     }
   };
 

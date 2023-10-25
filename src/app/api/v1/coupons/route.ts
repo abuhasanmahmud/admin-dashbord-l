@@ -23,13 +23,12 @@ export const POST = async (req: NextRequest) => {
   try {
     const newCoupon = new Coupon({
       // set every value individually
-      name: data.name,
-      price: data.price,
-      des: data.des,
-      Coupon: data.Coupon,
+      title: data.title,
+      couponCode: data.couponCode,
+      discountPercentage: data.discountPercentage,
     });
     const coupon = await newCoupon.save();
-    return NextResponse.json({ message: "success", coupon });
+    return NextResponse.json({ message: "New coupon create success",status:200 });
   } catch (error) {
     return NextResponse.json({ message: "error", error });
   }

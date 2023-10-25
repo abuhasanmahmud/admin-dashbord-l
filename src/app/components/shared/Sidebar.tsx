@@ -144,7 +144,6 @@ const Sidebar = ({ component }) => {
                     {navigation.map((item) => (
                       <li key={item.name}>
                         <Link
-              
                           href={item.href}
                           className={classNames(
                             pathname === item.href
