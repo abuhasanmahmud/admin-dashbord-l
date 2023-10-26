@@ -9,7 +9,7 @@ import { Combobox } from "@headlessui/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMyContext } from "../context/myContext";
 import DeleteModal2 from "../modal/DeleteModal2";
-import ProductDrawer from "../drawer/ProductDrawer";
+import ProductDrawer from "./../drawer/ProductDrawer";
 const people = [
   { id: 1, name: "Leslie Alexander" },
   { id: 2, name: " Alexander " },
@@ -68,15 +68,12 @@ const Products = ({ allProducts }: any) => {
 
   return (
     <>
-    
-
       <ProductDrawer
         isProductDrawerOpen={isProductDrawerOpen}
         setIsProductDrawerOpen={setIsProductDrawerOpen}
         productDetails={productDetails}
       />
       <DeleteModal2 productId={productId} />
-     
 
       <section className="mx-auto w-full max-w-7xl px-4 py-4">
         <div className="flex flex-col space-y-4  md:flex-row md:items-center md:justify-between md:space-y-0">
