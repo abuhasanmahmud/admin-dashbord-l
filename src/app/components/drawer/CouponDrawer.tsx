@@ -73,20 +73,32 @@ const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails
       setSubmitting(false);
       setIsOpenCouponDrawer(false);
       toast.success(`${res?.message} ` || "coupon update successfully");
-      router.refresh()
+      router.refresh();
     } else {
       setSubmitting(false);
     }
   };
 
+  // const [open, setOpen] = useState(true);
+
   return (
     <Transition.Root show={isOpenCouponDrawer} as={Fragment}>
       <Dialog as="div" className="relative z-[100]" onClose={setIsOpenCouponDrawer}>
-        <div className="fixed inset-0" />
+        <Transition.Child
+          as={Fragment}
+          enter="ease-in-out duration-500"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in-out duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -96,7 +108,7 @@ const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-2xl">
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                   <form
                     onSubmit={handleSubmit(!couponDetails._id ? handelCouponAdd : handelCouponUpdate)}
                     className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
@@ -285,5 +297,4 @@ const CouponDrawer = ({ isOpenCouponDrawer, setIsOpenCouponDrawer, couponDetails
     </Transition.Root>
   );
 };
-
 export default CouponDrawer;

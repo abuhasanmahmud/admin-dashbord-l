@@ -10,9 +10,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Bars } from "react-loader-spinner";
 
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { addCategory, updateCategory } from "@/app/controllers/category.controller";
-
 const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categoryDetails }: any) => {
   const {
     register,
@@ -61,7 +60,7 @@ const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categor
       type: data.type,
     };
 
-    const res = await updateCategory({  id: categoryDetails?._id,updateCategoryData:categoryData });
+    const res = await updateCategory({ id: categoryDetails?._id, updateCategoryData: categoryData });
     console.log("res..in c up", res);
     if (res?.status === 200) {
       setSubmitting(false);
@@ -77,11 +76,21 @@ const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categor
   return (
     <Transition.Root show={isOpenCategoryDrawer} as={Fragment}>
       <Dialog as="div" className="relative z-[100]" onClose={setIsOpenCategoryDrawer}>
-        <div className="fixed inset-0" />
+        <Transition.Child
+          as={Fragment}
+          enter="ease-in-out duration-500"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in-out duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -91,7 +100,7 @@ const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categor
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-2xl">
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                   <form
                     onSubmit={handleSubmit(
                       !categoryDetails._id ? handelCategoryAdd : handelCategoryUpdate
@@ -244,5 +253,4 @@ const CategoryDrawer = ({ isOpenCategoryDrawer, setIsOpenCategoryDrawer, categor
     </Transition.Root>
   );
 };
-
 export default CategoryDrawer;

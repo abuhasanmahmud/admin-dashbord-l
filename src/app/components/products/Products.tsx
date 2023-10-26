@@ -4,12 +4,12 @@ import ProductTable from "./ProductTable";
 import { useState, useEffect } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { FiSearch } from "react-icons/fi";
-
+import { GrClose } from "react-icons/gr";
 import { Combobox } from "@headlessui/react";
-import ProductDrawer from "../drawer/productDrawer";
 import { usePathname, useRouter } from "next/navigation";
 import { useMyContext } from "../context/myContext";
 import DeleteModal2 from "../modal/DeleteModal2";
+import ProductDrawer from "../drawer/ProductDrawer";
 const people = [
   { id: 1, name: "Leslie Alexander" },
   { id: 2, name: " Alexander " },
@@ -23,7 +23,7 @@ const Products = ({ allProducts }: any) => {
   const router = useRouter();
   const path = usePathname();
   // console.log("products", allProducts);
-  const [productDrawer, setProductDrawer] = useState(false);
+  const [isProductDrawerOpen, setIsProductDrawerOpen] = useState(false);
   const [productDetails, setProductDetails] = useState({});
   const [productId, setProductId] = useState("");
   const { setIsDeleteModal } = useMyContext();
@@ -31,7 +31,7 @@ const Products = ({ allProducts }: any) => {
   //handel product update
   const handelProductUpdata = (item: any) => {
     setProductDetails(item);
-    setProductDrawer(true);
+    setIsProductDrawerOpen(true);
   };
 
   //handle filter by category
@@ -68,12 +68,15 @@ const Products = ({ allProducts }: any) => {
 
   return (
     <>
+    
+
       <ProductDrawer
-        productDrawer={productDrawer}
-        setProductDrawer={setProductDrawer}
+        isProductDrawerOpen={isProductDrawerOpen}
+        setIsProductDrawerOpen={setIsProductDrawerOpen}
         productDetails={productDetails}
       />
       <DeleteModal2 productId={productId} />
+     
 
       <section className="mx-auto w-full max-w-7xl px-4 py-4">
         <div className="flex flex-col space-y-4  md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -92,6 +95,14 @@ const Products = ({ allProducts }: any) => {
                 <p className="absolute top-2 left-1">
                   <FiSearch size={20} />
                 </p>
+                {searchText.length !== 0 && (
+                  <p
+                    onClick={(e) => setSearchText("")}
+                    className="absolute top-3 right-2 cursor-pointerAA"
+                  >
+                    <GrClose size={15} />
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -101,7 +112,7 @@ const Products = ({ allProducts }: any) => {
               <div>
                 <button
                   onClick={(e) => {
-                    setProductDrawer(true), setProductDetails({});
+                    setIsProductDrawerOpen(true), setProductDetails({});
                   }}
                   type="button"
                   className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
@@ -122,7 +133,7 @@ const Products = ({ allProducts }: any) => {
                 <Combobox.Input
                   className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(event) => setQuery(event.target.value)}
-                  displayValue={(person) => person?.name}
+                  // displayValue={(person) => people?.name}
                 />
                 <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                   <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -170,13 +181,13 @@ const Products = ({ allProducts }: any) => {
           <div className="basis-1/2">
             <Combobox as="div" value={selectedPerson} onChange={setSelectedPerson}>
               <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
-                Filter By Prize
+                Filter By Price
               </Combobox.Label>
               <div className="relative mt-2">
                 <Combobox.Input
                   className="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(event) => setQuery(event.target.value)}
-                  displayValue={(person) => person?.name}
+                  // displayValue={(person) => person?.name}
                 />
                 <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
                   <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

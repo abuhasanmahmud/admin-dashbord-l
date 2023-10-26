@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 import { addProduct, updateProduct } from "@/app/controllers/product.controller";
 import { useRouter } from "next/navigation";
 
-const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any) => {
+const ProductDrawer = ({ isProductDrawerOpen, setIsProductDrawerOpen, productDetails }: any) => {
   const router = useRouter();
   const {
     register,
@@ -26,10 +26,10 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
   } = useForm();
 
   useEffect(() => {
-    setValue("name", productDetails.name);
-    setValue("price", productDetails.price);
-    setValue("des", productDetails.des);
-    setValue("category", productDetails.category);
+    setValue("name", productDetails?.name);
+    setValue("price", productDetails?.price);
+    setValue("des", productDetails?.des);
+    setValue("category", productDetails?.category);
   }, [productDetails]);
 
   const [submitting, setSubmitting] = useState(false);
@@ -49,7 +49,7 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
     if (res?.product) {
       setSubmitting(false);
       reset();
-      setProductDrawer(false);
+      setIsProductDrawerOpen(false);
       toast.success(`${res?.product?.name} successfully added`);
       router.refresh();
     } else {
@@ -72,22 +72,33 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
     console.log("res..in update porudct ", res);
     if (res?.status === 200) {
       setSubmitting(false);
-      setProductDrawer(false);
+      setIsProductDrawerOpen(false);
       toast.success(`${res?.message}`);
       router.refresh();
     } else {
       setSubmitting(false);
     }
   };
+  // const [open, setOpen] = useState(true);
 
   return (
-    <Transition.Root show={productDrawer} as={Fragment}>
-      <Dialog as="div" className="relative z-[100]" onClose={setProductDrawer}>
-        <div className="fixed inset-0" />
+    <Transition.Root show={isProductDrawerOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-[100]" onClose={setIsProductDrawerOpen}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-in-out duration-500"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in-out duration-500"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -97,9 +108,11 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-2xl">
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                   <form
-                    onSubmit={handleSubmit(!productDetails._id ? handelProductAdd : handelProductUpdate)}
+                    onSubmit={handleSubmit(
+                      !productDetails?._id ? handelProductAdd : handelProductUpdate
+                    )}
                     className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
                   >
                     <div className="flex-1">
@@ -108,8 +121,8 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
                         <div className="flex items-start justify-between space-x-3">
                           <div className="space-y-1">
                             <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                              {productDetails.name
-                                ? `Update product (${productDetails.name})`
+                              {productDetails?.name
+                                ? `Update product (${productDetails?.name})`
                                 : "Add Product"}
                             </Dialog.Title>
                           </div>
@@ -117,7 +130,7 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
                             <button
                               type="button"
                               className="relative text-gray-400 hover:text-gray-500"
-                              onClick={() => setProductDrawer(false)}
+                              onClick={() => setIsProductDrawerOpen(false)}
                             >
                               <span className="absolute -inset-2.5" />
                               <span className="sr-only">Close panel</span>
@@ -246,7 +259,7 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
                         <button
                           type="button"
                           className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                          onClick={() => setProductDrawer(false)}
+                          onClick={() => setIsProductDrawerOpen(false)}
                         >
                           Cancel
                         </button>
@@ -269,5 +282,4 @@ const ProductDrawer = ({ productDrawer, setProductDrawer, productDetails }: any)
     </Transition.Root>
   );
 };
-
 export default ProductDrawer;
