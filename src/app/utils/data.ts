@@ -32,6 +32,13 @@ const navigation = [
   { name: "Our Staff", href: "/staff", icon: DocumentDuplicateIcon, current: false },
 ];
 
+const categorys = [
+  { id: 1, name: "Laptop" },
+  { id: 2, name: "Phone" },
+  { id: 3, name: "Tools" },
+  { id: 4, name: "Smart watch" },
+];
+
 const userNavigation = [
   { name: "Your profile", href: "#" },
   { name: "Sign out", href: "#" },
@@ -795,4 +802,5 @@ export {
   blogGrideData,
   navigation,
   userNavigation,
+  categorys
 };
