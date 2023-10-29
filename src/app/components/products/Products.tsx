@@ -35,7 +35,8 @@ const Products = ({ allProducts }: any) => {
   //handle shorting by category
   const [shotvalue, setShotValue] = useState("");
   const sv = shotvalue?.toString().replaceAll(" ", "").toLowerCase();
-  // console.log("sv", sv);
+  console.log("sv", sv);
+
   if (shotvalue) {
     if (sv === "popularity") {
       filteredProducts?.sort((a, b) => (a.numOfReviews > b.numOfReviews ? 1 : -1));
