@@ -19,7 +19,7 @@ function classNames(...classes) {
 const Products = ({ allProducts }: any) => {
   const router = useRouter();
   const path = usePathname();
-  console.log("products", allProducts);
+  // console.log("products", allProducts);
   const [isProductDrawerOpen, setIsProductDrawerOpen] = useState(false);
   const [productDetails, setProductDetails] = useState({});
   const [productId, setProductId] = useState("");
