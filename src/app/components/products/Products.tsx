@@ -9,7 +9,7 @@ import { Combobox } from "@headlessui/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMyContext } from "../context/myContext";
 import DeleteModal2 from "../modal/DeleteModal2";
-import ProductDrawer from "../drawer/ProductDrawer";
+import ProductDrawer from "../drawer/ProductDrawer2";
 import { categorys } from "@/app/utils/data";
 import { Listbox, Transition } from "@headlessui/react";
 

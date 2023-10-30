@@ -227,7 +227,7 @@ const ProductDrawer = ({ isProductDrawerOpen, setIsProductDrawerOpen, productDet
                         </div>
 
                         {/* product img */}
-                        {/* <div>
+                        <div>
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Upload product image
                           </label>
@@ -236,7 +236,7 @@ const ProductDrawer = ({ isProductDrawerOpen, setIsProductDrawerOpen, productDet
                             id="product-img"
                             type="file"
                           />
-                        </div> */}
+                        </div>
                       </div>
                     </div>
 
